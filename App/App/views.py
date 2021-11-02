@@ -567,16 +567,15 @@ def return_template(usertemplate_name,var1,setion,setion2,rep,cnx,user,template)
   #host(r'api', 'api.urls', name='api')
   path=path_getter()+"/doit"
   use_templates = ["youtube2","youtube1"]
-  url=path+"?action_type=makepage2&usertemplate_name="+usertemplate_name+"&var1="+var1+"&rep="+rep+"&setion="+setion+"&setion2="+setion2
+  url=path+"?action_type=makepage2&usertemplate_name=\"+encodeURI(\""+usertemplate_name+"\")+\"&var1=\"+encodeURI(\""+var1+"\")+\"&rep=\"+encodeURI(\""+rep+"\")+\"&setion=\"+encodeURI(\""+setion2+"\")+\"&setion2=\"+"+"encodeURI(\""+setion2+"\")+\""
   if usertemplate_name in use_templates:
       return "<script type=\"text/javascript\"> function blank(A,B){  val = JSON.parse(A); newval = val[\"id\"].replaceAll(\"\\\"\", \"&quot;\"); console.log(\"on here\"); console.log(newval); document.getElementById(\"main\").innerHTML = \"<iframe style=\\\"width: 100%;height:100%;\\\" srcdoc=\\\"\"+newval+\"\\\"></iframe>\"; } function post_responce(path,func,varible){ fetch(path).then( ( response) => { return response.text();   }).then((html) => { func(  html.trim()  , varible ) }); } post_responce(\""+url+"\",blank,\"val\"); </script> <div id = \"main\"> <div>"
   
   if user=="":
-    #val = user==""
-    #asdfafda = asdfasfdf
     return "<script type=\"text/javascript\"> function blank(A,B){  val = JSON.parse(A); newval = val[\"id\"].replaceAll(\"\\\"\", \"&quot;\"); console.log(\"on here\"); console.log(newval); document.getElementById(\"main\").innerHTML = \"<iframe style=\\\"width: 100%;height:100%;\\\" sandbox=\\\"allow-scripts\\\" srcdoc=\\\"\"+newval+\"\\\"></iframe>\"; } function post_responce(path,func,varible){ fetch(path).then( ( response) => { return response.text();   }).then((html) => { func(  html.trim()  , varible ) }); } post_responce(\""+url+"\",blank,\"val\"); </script> <div id = \"main\"> <div>"
   #asdfafda = asdfasfdf
-  url=path+"?action_type=makepage2&usertemplate_name="+user+"_"+template+"&var1="+var1+"&rep="+rep+"&setion="+setion+"&setion2="+setion2
+  url=path+"?action_type=makepage2&usertemplate_name=\"+encodeURI(\""+user+"_"+template+"\")+\"&var1=\"+encodeURI(\""+var1+"\")+\"&rep=\"+encodeURI(\""+rep+"\")+\"&setion=\"+encodeURI(\""+setion2+"\")+\"&setion2=\"+"+"encodeURI(\""+setion2+"\")+\""
+
   return "<script type=\"text/javascript\"> function blank(A,B){  val = JSON.parse(A); newval = val[\"id\"].replaceAll(\"\\\"\", \"&quot;\");  console.log(\"on here\"); console.log(newval); document.getElementById(\"main\").innerHTML = \"<iframe style=\\\"width: 100%;height:100%;\\\" srcdoc=\\\"\"+newval+\"\\\"></iframe>\"; } function post_responce(path,func,varible){ fetch(path).then( ( response) => { return response.text();   }).then((html) => { func(  html.trim()  , varible ) }); } function check_domains() { myurl = window.location.href; template =\""+template+"\"; username=\""+user+"\"; val = myurl.split(\".localhost:8000\"); val = val[0].split(\"http://\");val = val[1].split(\".\"); if(val.length !=2){return document.getElementById(\"main\").innerHTML=\"FAIL with hostname\";} if (username==val[0]) { if (template==val[1]) { post_responce(\""+url+"\",blank,\"val\"); }; } return document.getElementById(\"main\").innerHTML=\"FAIL with hostname\"; } check_domains(); </script> <div id = \"main\"> <div>"
 
 #returns a template 
@@ -1048,6 +1047,9 @@ def sriper(word):
   word=word.replace("'"  ,"(???2???)")
   word=word.replace("`"  ,"(???3???)")
   word=word.replace("\\" ,"(???4???)")
+  word=word.replace("&" ,"(???5???)")
+  word=word.replace("/" ,"(???6???)")
+  word=word.replace(":" ,"(???7???)")
   return word
 
 def usriper(word):
@@ -1062,6 +1064,9 @@ def unstrip(word):
   word=word.replace("(???2???)","'" )
   word=word.replace("(???3???)","`" )
   word=word.replace("(???4???)","\\")
+  word=word.replace("&" ,"(???5???)")
+  word=word.replace("/" ,"(???6???)")
+  word=word.replace(":" ,"(???7???)")
   return word
 
 def doit(req):
@@ -1344,13 +1349,7 @@ def doit(req):
         return HttpResponse(get_key_back(user,password,crypto_path+L_name,try_to_connect()))
     if action_type=="maketraid":
         return HttpResponse( funtion_make_traid(user,password,send_type,send_amount,request_type,request_amound,try_to_connect())  )
-    a=""
-    try:
-        a=sriper(req.GET["a"])
-    except:
-        pass
-    if a =="re":
-      return redirect_req(url,rep,try_to_connect())
+
     #templates
     types=""
     user=""
@@ -1412,6 +1411,15 @@ def doit(req):
             return response
         else:
             return HttpResponse(return_template2(usertemplate_name,var1,setion,setion2,rep,try_to_connect() ) )
+    
+
+
+    if url !="":
+      return redirect_req(url,rep,try_to_connect())
+
+
+
+
     return HttpResponse( "api_fail" )
 
 def get_key(path,ledgure_name,keyname,password):
