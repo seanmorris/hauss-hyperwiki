@@ -28,7 +28,7 @@ All we be in one Docker container that will be already setted up to just start W
 3. go to http://localhost:8000/ the rest of the documention can be found there
 4. go to http://localhost:5000/ please give time for it to connfiger and load
 5. go to add a database named app1 by clicking new
-6. import into that database the app1 sql file
+6. import into that database the app1 or app1_new sql file
 7. open test.html and look at the console log
 
 
