@@ -1,0 +1,45 @@
+<script type="text/javascript"> 
+
+	function blank(A,B){  
+		val = JSON.parse(A); newval = val["id"].replaceAll("\"", "&quot;"); 
+		document.getElementById("main").innerHTML = "<iframe style=\"width: 100%;height:100%;\" srcdoc=\""+newval+"\"></iframe>"; 
+	} 
+
+	function post_responce(path,func,varible){ 
+		fetch(path).then( ( response) => { 
+			return response.text();   
+		}).then((html) => { 
+			func(  html.trim()  , varible ) 
+		}); 
+	} 
+
+	function check_domains() { 
+		myurl = window.location.href; 
+		template ="(!???T???!)"; 
+		username="(!???N???!)"; 
+		val = myurl.split(".localhost:8000"); 
+		val = val[0].split("http://");val = val[1].split("."); 
+
+		if(val.length !=2){
+			return document.getElementById("main").innerHTML="FAIL with hostname";
+		} 
+		if (username==val[0]) {
+			 if (template==val[1]) { 
+			 	post_responce("(!???U???!)",blank,"val"); 
+				}; 
+		}
+		return document.getElementById("main").innerHTML="FAIL with hostname";
+	 } 
+
+	 check_domains(); 
+
+</script> 
+
+
+
+<div id = "main">
+
+
+
+ <div>
+

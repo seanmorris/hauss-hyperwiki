@@ -23,6 +23,7 @@ from django.urls import path
 #https://stackoverflow.com/questions/31178022/using-subdomains-in-django
 #django-hosts==4.0
 #django-subdomains==2.1.0
+
 def try_to_connect():
     cnx = pymysql.connect(user='root', password='secret',host='mysql-server',database='app1')
     return cnx
@@ -567,17 +568,34 @@ def return_template(usertemplate_name,var1,setion,setion2,rep,cnx,user,template)
   #host(r'api', 'api.urls', name='api')
   path=path_getter()+"/doit"
   use_templates = ["youtube2","youtube1"]
-  url=path+"?action_type=makepage2&usertemplate_name=\"+encodeURI(\""+usertemplate_name+"\")+\"&var1=\"+encodeURI(\""+var1+"\")+\"&rep=\"+encodeURI(\""+rep+"\")+\"&setion=\"+encodeURI(\""+setion2+"\")+\"&setion2=\"+"+"encodeURI(\""+setion2+"\")+\""
+
+
+  url=path+"?action_type=makepage2&usertemplate_name=\"+encodeURI(\""+usertemplate_name+"\")+\"&var1=\"+encodeURI(\""+var1+"\")+\"&rep=\"+encodeURI(\""+rep+"\")+\"&setion=\"+encodeURI(\""+setion+"\")+\"&setion2=\"+"+"encodeURI(\""+setion2+"\")+\""
   if usertemplate_name in use_templates:
+      f = open("frontend-loader-no_origan.html", "r")
+      out= f.read()
+      f.close()
       return "<script type=\"text/javascript\"> function blank(A,B){  val = JSON.parse(A); newval = val[\"id\"].replaceAll(\"\\\"\", \"&quot;\"); console.log(\"on here\"); console.log(newval); document.getElementById(\"main\").innerHTML = \"<iframe style=\\\"width: 100%;height:100%;\\\" srcdoc=\\\"\"+newval+\"\\\"></iframe>\"; } function post_responce(path,func,varible){ fetch(path).then( ( response) => { return response.text();   }).then((html) => { func(  html.trim()  , varible ) }); } post_responce(\""+url+"\",blank,\"val\"); </script> <div id = \"main\"> <div>"
   
   if user=="":
-    return "<script type=\"text/javascript\"> function blank(A,B){  val = JSON.parse(A); newval = val[\"id\"].replaceAll(\"\\\"\", \"&quot;\"); console.log(\"on here\"); console.log(newval); document.getElementById(\"main\").innerHTML = \"<iframe style=\\\"width: 100%;height:100%;\\\" sandbox=\\\"allow-scripts\\\" srcdoc=\\\"\"+newval+\"\\\"></iframe>\"; } function post_responce(path,func,varible){ fetch(path).then( ( response) => { return response.text();   }).then((html) => { func(  html.trim()  , varible ) }); } post_responce(\""+url+"\",blank,\"val\"); </script> <div id = \"main\"> <div>"
+    f = open("frontend-loader.html", "r")
+    out= f.read()
+    f.close()
+    value  = user+"_"+template
+    out=out.replace('(!???U???!)',  url      )
+    return out
   #asdfafda = asdfasfdf
-  url=path+"?action_type=makepage2&usertemplate_name=\"+encodeURI(\""+user+"_"+template+"\")+\"&var1=\"+encodeURI(\""+var1+"\")+\"&rep=\"+encodeURI(\""+rep+"\")+\"&setion=\"+encodeURI(\""+setion2+"\")+\"&setion2=\"+"+"encodeURI(\""+setion2+"\")+\""
-
-  return "<script type=\"text/javascript\"> function blank(A,B){  val = JSON.parse(A); newval = val[\"id\"].replaceAll(\"\\\"\", \"&quot;\");  console.log(\"on here\"); console.log(newval); document.getElementById(\"main\").innerHTML = \"<iframe style=\\\"width: 100%;height:100%;\\\" srcdoc=\\\"\"+newval+\"\\\"></iframe>\"; } function post_responce(path,func,varible){ fetch(path).then( ( response) => { return response.text();   }).then((html) => { func(  html.trim()  , varible ) }); } function check_domains() { myurl = window.location.href; template =\""+template+"\"; username=\""+user+"\"; val = myurl.split(\".localhost:8000\"); val = val[0].split(\"http://\");val = val[1].split(\".\"); if(val.length !=2){return document.getElementById(\"main\").innerHTML=\"FAIL with hostname\";} if (username==val[0]) { if (template==val[1]) { post_responce(\""+url+"\",blank,\"val\"); }; } return document.getElementById(\"main\").innerHTML=\"FAIL with hostname\"; } check_domains(); </script> <div id = \"main\"> <div>"
-
+  f = open("frontend-loader_user_origan.html", "r")
+  out= f.read()
+  f.close()
+  value  = user+"_"+template
+  #frontend-loader_user_origan
+  url=path+"?action_type=makepage2&usertemplate_name=\"+encodeURI(\""+user+"_"+template+"\")+\"&var1=\"+encodeURI(\""+var1+"\")+\"&rep=\"+encodeURI(\""+rep+"\")+\"&setion=\"+encodeURI(\""+setion+"\")+\"&setion2=\"+"+"encodeURI(\""+setion2+"\")+\""
+  #a =asdsafad
+  out=out.replace('(!???N???!)',  user )
+  out=out.replace('(!???T???!)',  template )
+  out=out.replace('(!???U???!)',  url )
+  return out
 #returns a template 
 def return_template2(usertemplate_name,var1,setion,setion2,rep,cnx):
   path=path_getter()+"/doit"
@@ -602,6 +620,7 @@ def return_template2(usertemplate_name,var1,setion,setion2,rep,cnx):
   template = template.replace('(!C???'+rep+'???C!)',   '`' )
   template = template.replace('(!D???'+rep+'???D!)',  '\\' )
   template = template.replace('(!Q???'+rep+'???Q!)',  'script' )
+
   template = template.replace('(!0???'+rep+'???0!)',  var1     )
   template = template.replace('(!W???'+rep+'???W!)',  '&'      )
   template = template.replace('(!L???'+rep+'???L!)',  '+')
@@ -609,6 +628,8 @@ def return_template2(usertemplate_name,var1,setion,setion2,rep,cnx):
   template = template.replace('(!Z???'+rep+'???Z!)',  setion2  )
   template = template.replace('(!P???'+rep+'???P!)',  path  )
   template = template.replace('(!T???'+rep+'???T!)',  usertemplate_name  )
+
+
 
   dictionary ={ 
     "id": str(template)
@@ -1421,48 +1442,6 @@ def doit(req):
 
 
     return HttpResponse( "api_fail" )
-
-def get_key(path,ledgure_name,keyname,password):
-  #get barter key
-  x = requests.get(path+"check_key.php?name="+keyname)
-
-  getarray = str(x.content)
-
-  out = getarray.split(" ")
-  if len(out)==9:
-  #cehcks barter key
-    print("passed_leddgure")
-  else:
-    return [False,"Failed leddgure",path+" "+ledgure_name+" "+keyname+" "+password+" "+path+"check_key.php?name="+keyname]
-
-  if ledgure_name==out[1]:
-    print("passed_leddgure")
-  else:
-    return [False,"Failed leddgure",path+" "+ledgure_name+" "+keyname+" "+password+" "+path+"check_key.php?name="+keyname]
-  #
-  passwordCandidate = password
-  val = hashlib.sha256(passwordCandidate.encode()).hexdigest()
-  if val==out[3]:
-    print("passed_key")
-  else:
-    return [False,"Failed_key",path+" "+ledgure_name+" "+keyname+" "+password+" "+path+"check_key.php?name="+keyname]
-  random_string=""
-  #generate and sores new crypto
-  for _ in range(100):
-      random_integer = random.randint(65, 80)
-      random_string += (chr(random_integer))
-  passwordCandidate = random_string
-  newkey = hashlib.sha256(passwordCandidate.encode()).hexdigest()
-  keyhash = hashlib.sha256(newkey.encode()).hexdigest()
-  newname = ""
-  x = requests.get(path+"change_key.php?name="+keyname+"&key="+password+"&Nkey="+keyhash)
-  myval = x.content.decode('utf-8').strip()
-
-  if myval=="false":
-    return [False,"NO_key", "",path+" "+ledgure_name+" "+keyname+" "+password+" "+path+"check_key.php?name="+keyname]
-  stingout = path+"output2.php?key="+newkey+"&name="+myval+"&entery_name="+ledgure_name 
-  #print(stingout)
-  return [True,stingout,path+ledgure_name]
 
 
 

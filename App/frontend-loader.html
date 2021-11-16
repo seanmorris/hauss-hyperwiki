@@ -1,0 +1,33 @@
+<script type="text/javascript"> 
+	function blank(A,B){ 
+		val = JSON.parse(A); 
+		newval = val["id"].replaceAll("\"", "&quot;"); 
+		console.log("on here"); console.log(newval); 
+		document.getElementById("main").innerHTML = "<iframe style=\"width: 100%;height:100%;\" srcdoc=\""+newval+"\"></iframe>"; 
+	} 
+	function post_responce(path,func,varible){ 
+		fetch(path).then( ( response) => { return response.text();   }).then((html) => { 
+			func(  html.trim()  , varible ) 
+		}); 
+	}
+
+	function make() {
+		post_responce("(!???U???!)",blank,"val");
+	}
+	make();
+ </script> 
+
+
+
+<div id = "main">
+<!--
+ <img src="http://www.clker.com/cliparts/h/C/D/U/r/5/add-button-hi.png" alt="Girl in a jacket" width="500" height="600"> 
+
+
+<button onclick="make()">Click
+-->
+
+ </div>
+
+
+

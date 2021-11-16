@@ -1,0 +1,30 @@
+<script type="text/javascript"> 
+
+	function blank(A,B){ 
+
+		val = JSON.parse(A); 
+
+
+		newval = val["id"].replaceAll("\"", "&quot;"); 
+
+		console.log("on here"); console.log(newval); 
+
+
+		document.getElementById("main").innerHTML = "<iframe style=\"width: 100%;height:100%;\" sandbox=\"allow-scripts\" srcdoc=\""+newval+"\"></iframe>"; 
+
+	} 
+
+
+	function post_responce(path,func,varible){ 
+		fetch(path).then( ( response) => { return response.text();   }).then((html) => { 
+			func(  html.trim()  , varible ) 
+		}); 
+	} 
+
+	post_responce("http://localhost:8000/doit?action_type=makepage2&usertemplate_name="+encodeURI("u1_mygamedhxnscydgdimihmpcpci")+"&var1="+encodeURI("")+"&rep="+encodeURI("")+"&setion="+encodeURI("992745ac86d7adfe9022ac8b406e09b021b0a4b720a3cf8f3606697c792b3510")+"&setion2="+encodeURI("992745ac86d7adfe9022ac8b406e09b021b0a4b720a3cf8f3606697c792b3510")+"",blank,"val");
+
+ </script> 
+
+
+
+<div id = "main"> <div>
