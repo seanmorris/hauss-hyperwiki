@@ -11,12 +11,17 @@ services:
       - "8000:8000"
     volumes:
       - ./App:/App
+    env_file:
+      - .env
 
   mysql-server:
     image: mysql:8.0.19
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USERNAME: ${MYSQL_HOST}
+      MYSQL_PASSWORD: ${MYSQL_PASS}
+      MYSQL_DATABASE: ${}
     volumes:
       - ./data/db:/var/lib/mysql
 
@@ -31,6 +36,3 @@ services:
       - "5000:80"
 volumes:
   mysql-data:
-
-
-

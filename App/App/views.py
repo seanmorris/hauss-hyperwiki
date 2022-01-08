@@ -25,7 +25,7 @@ from django.urls import path
 #django-subdomains==2.1.0
 
 def try_to_connect():
-    cnx = pymysql.connect(user='root', password='secret',host='mysql-server',database='app1')
+    cnx = pymysql.connect(user=os.environ.get('MYSQL_USERNAME'), password=os.environ.get('MYSQL_PASSWORD'),host=os.environ.get('MYSQL_HOSTNAME'),database=os.environ.get('MYSQL_DATABASE'))
     return cnx
 
 #Path Getter

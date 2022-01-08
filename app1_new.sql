@@ -33,7 +33,7 @@ CREATE TABLE `Acounts` (
   `Ledgurepassword` text NOT NULL,
   `email` text NOT NULL,
   `time` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -48,7 +48,7 @@ CREATE TABLE `crypto3` (
   `added` timestamp NOT NULL,
   `cached` timestamp NOT NULL,
   `used` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -65,7 +65,7 @@ CREATE TABLE `c_key` (
   `forward` text NOT NULL,
   `solution` text NOT NULL,
   `email` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -77,7 +77,7 @@ CREATE TABLE `items` (
   `itemname` text NOT NULL,
   `url` text NOT NULL,
   `path` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `items`
@@ -97,7 +97,7 @@ CREATE TABLE `money` (
   `user_money` text NOT NULL,
   `mony_type` text NOT NULL,
   `amount_of_money` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -116,7 +116,7 @@ CREATE TABLE `posts` (
   `catagoy` text NOT NULL,
   `catagoy_2` text NOT NULL,
   `postkey` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `posts`
@@ -130,7 +130,7 @@ CREATE TABLE `redirect` (
   `id` text NOT NULL,
   `url` text NOT NULL,
   `time` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -143,7 +143,7 @@ CREATE TABLE `template` (
   `usertemplate_name` text NOT NULL,
   `template` mediumtext NOT NULL,
   `time` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `template`
@@ -187,7 +187,7 @@ CREATE TABLE `traidtable` (
   `traid_money_amount` float NOT NULL,
   `user` text NOT NULL,
   `buyer` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -200,7 +200,7 @@ CREATE TABLE `users` (
   `hashword` text NOT NULL,
   `uname` text NOT NULL,
   `email` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -223,7 +223,7 @@ ALTER TABLE `Acounts`
 -- Indexes for table `crypto3`
 --
 ALTER TABLE `crypto3`
-  ADD PRIMARY KEY (`id_section`(248));
+  ADD PRIMARY KEY (`id_section`(128));
 
 --
 -- Indexes for table `c_key`
@@ -241,7 +241,7 @@ ALTER TABLE `items`
 -- Indexes for table `money`
 --
 ALTER TABLE `money`
-  ADD PRIMARY KEY (`user_money`(248));
+  ADD PRIMARY KEY (`user_money`(128));
 
 --
 -- Indexes for table `posts`
@@ -253,7 +253,7 @@ ALTER TABLE `posts`
 -- Indexes for table `redirect`
 --
 ALTER TABLE `redirect`
-  ADD PRIMARY KEY (`id`(248));
+  ADD PRIMARY KEY (`id`(128));
 
 --
 -- Indexes for table `template`
@@ -265,7 +265,7 @@ ALTER TABLE `template`
 -- Indexes for table `traidtable`
 --
 ALTER TABLE `traidtable`
-  ADD PRIMARY KEY (`traid_id`(248));
+  ADD PRIMARY KEY (`traid_id`(128));
 
 --
 -- Indexes for table `users`
