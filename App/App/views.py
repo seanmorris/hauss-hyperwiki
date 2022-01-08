@@ -32,7 +32,7 @@ def try_to_connect():
 
 #Path Getter
 def path_getter():
-  return "http://localhost:8000"
+  return "https://haussmans-hyperwiki.herokuapp.com/"
 
 #Home Page
 def print_user(req):
