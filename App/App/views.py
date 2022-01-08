@@ -18,6 +18,8 @@ from django.shortcuts import render
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django_hosts import patterns, host
 from django.urls import path
+import os
+
 #Connection
 
 #https://stackoverflow.com/questions/31178022/using-subdomains-in-django
